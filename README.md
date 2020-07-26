@@ -1,6 +1,6 @@
 # Outbox Patern - Implementação de exemplo
 
-Este projeto apresenta uma implementação do ``outbox pattern``, servindo de exemplo para o artigo públicado [aqui](http://meu_artigo_url).
+Este projeto apresenta uma implementação do ``outbox pattern``, servindo de exemplo para o artigo publicado [aqui](http://meu_artigo_url).
 
 Basicamente, temos:
 * Um ``producer``, chamado ``user-api``, escrito em java ([Spring](https://spring.io/projects/spring-boot)), ele que implementa de fato o ``outbox``;
