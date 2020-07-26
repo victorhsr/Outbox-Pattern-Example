@@ -1,0 +1,75 @@
+version: "3.3"
+
+services:
+  # D A T A B A S E  ->  POSTGRESQL
+  user-db:
+    build:
+      context: ./user-api/db
+    image: user_db
+    restart: always
+    environment:
+      TZ: "America/Recife"
+      POSTGRES_USER: "userapi"
+      POSTGRES_PASSWORD: "some_password"
+      POSTGRES_DB: "userdb"
+    ports:
+      - 5432:5432
+    networks:
+      - outbox-network
+    container_name: user-db
+
+  # B A C K - E N D  ->  API
+  user-api:
+    build:
+      context: ./user-api
+    image: user_api
+    restart: always
+    environment:
+      TZ: "America/Recife"
+      spring.datasource.url: jdbc:postgresql://user-db:5432/userdb
+    ports:
+      - 8081:8081
+    networks:
+      - outbox-network
+    container_name: user-api
+    depends_on:
+      - user-db
+      - outbox-rabbitmq
+
+  # R A B B I T M Q -> MESSAGE_BROKER
+  outbox-rabbitmq:
+    build:
+      context: ./rabbitmq
+    image: outbox_rabbitmq
+    restart: always
+    ports:
+      - 15672:15672
+      - 5672:5672
+    networks:
+      - outbox-network
+    container_name: outbox-rabbitmq
+
+  # R E C O M E N D A T I O N S -> API
+  recomendations-api:
+    build:
+      context: "./recomendations-api"
+    image: recomendations_api
+    restart: always
+    environment:
+      amqp_hostname: outbox-rabbitmq
+      amqp_port: 5672
+      amqp_username: admin
+      amqp_password: admin
+      user_queue: user_created_q
+    ports:
+      - 3000:3000
+    networks:
+      - outbox-network
+    container_name: recomendations-api
+    depends_on:
+      - outbox-rabbitmq
+
+#  N E T W O R K
+networks:
+  outbox-network:
+    driver: bridge
