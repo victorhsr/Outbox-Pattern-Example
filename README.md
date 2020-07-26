@@ -1,6 +1,6 @@
 # Outbox Patern - Implementação de exemplo
 
-Este projeto apresenta uma implementação do ``outbox pattern``, servindo de exemplo para o artigo publicado [aqui](http://meu_artigo_url).
+Este projeto apresenta uma implementação do ``outbox pattern``, servindo de exemplo para o artigo publicado [aqui](https://medium.com/@victorhsr/microservices-outbox-pattern-a4344d8ed0b).
 
 Basicamente, temos:
 * Um ``producer``, chamado ``user-api``, escrito em java ([Spring](https://spring.io/projects/spring-boot)), ele que implementa de fato o ``outbox``;
@@ -27,4 +27,4 @@ Para inciar o fluxo, basta realizar uma requisição POST para ``http://localhos
 Será cadastrado um usuário com estes dados, registrada a solicitação de disparo de notificação e eventualmente, um ``schedule service`` irá detectar as mensagens de notificação pendentes e irá publicá-las na queue ``user_created_q`` por meio do nosso ``message broker``. A aplicação ``recomendations`` irá escutar as mensagens e exibir algumas informações sobre ela por meio do sistema de log.
 
 ---
-Para uma explicação mais detalhada do que está acontecendo e o porque disto, recomendo a leitura do [artigo](http://meu_artigo_url) originou esse trabalho. Boa leitura!
+Para uma explicação mais detalhada do que está acontecendo e o porque disto, recomendo a leitura do [artigo](https://medium.com/@victorhsr/microservices-outbox-pattern-a4344d8ed0b) originou esse trabalho. Boa leitura!
