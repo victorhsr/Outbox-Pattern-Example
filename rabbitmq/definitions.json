@@ -1,21 +1,42 @@
 {
-    "queues": [
-        {
-            "name": "user_created_q",
-            "vhost": "/",
-            "durable": true,
-            "auto_delete": false,
-            "arguments": {}
-        }
-    ],
-    "bindings": [
-        {
-            "source": "amq.fanout",
-            "vhost": "/",
-            "destination": "user_created_q",
-            "destination_type": "queue",
-            "routing_key": "user_created_rk",
-            "arguments": {}
-        }
-    ]
+  "users": [
+    {
+      "name": "admin",
+      "password": "admin",
+      "tags": "administrator"
+    }
+  ],
+  "vhosts": [
+    {
+      "name": "/"
+    }
+  ],
+  "permissions": [
+    {
+      "user": "admin",
+      "vhost": "/",
+      "configure": ".*",
+      "write": ".*",
+      "read": ".*"
+    }
+  ],
+  "queues": [
+    {
+      "name": "user_created_q",
+      "vhost": "/",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {}
+    }
+  ],
+  "bindings": [
+    {
+      "source": "amq.fanout",
+      "vhost": "/",
+      "destination": "user_created_q",
+      "destination_type": "queue",
+      "routing_key": "user_created_rk",
+      "arguments": {}
+    }
+  ]
 }
